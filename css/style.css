@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+body {
+  --light-accent: #E4DAF0;
+  --accent: #C2B1D9;
+  --dark-accent: #927DAD;
+}
+
 @font-face {
   font-family: 'Roboto';
   src: url(/assets/fonts/Roboto-VariableFont_wdth\,wght.ttf);
@@ -12,6 +18,11 @@
 @font-face {
   font-family: 'Montserrat';
   src: url(/assets/fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+.text-title {
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .flex-col {
@@ -26,6 +37,11 @@
 .gap-10 {
   gap: 10px;
 }
+
+.gap-20 {
+  gap: 20px;
+}
+
 .gap-30 {
   gap: 30px;
 }
@@ -35,12 +51,12 @@
 }
 
 .main-container {
-  width: 1300px;
+  width: 1000px;
   margin: 0 auto;
 }
 
 .header, .footer {
-  background-color: pink;
+  background-color: var(--accent);
   padding: 10px 0;
 }
 
@@ -56,12 +72,29 @@
 }
 
 .main-button {
-  background-color: orchid;
+  background-color: var(--dark-accent);
   color: white;
   border: 0;
   padding: 10px 20px;
   border-radius: 100px;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.border-button {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background-color: white;
+  border-radius: 100px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 16px;
+}
+
+.border-button:hover {
+  filter: drop-shadow(0 0 5px var(--light-accent));
 }
 
 .cards-container {
@@ -72,11 +105,24 @@
   margin: 0 auto;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .card{
   width: 140px;
   height: 140px;
   cursor: pointer;
   perspective: 1000px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+  user-select: none;
 }
 
 .card-inner {
@@ -85,14 +131,19 @@
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  border: 10px solid pink;
-  background-color: pink;
-  border-radius: 20px;
+  border: 10px solid var(--accent);
+  background-color: var(--accent);
+  border-radius: 20px;  
 }
 
-.card:hover .card-inner{
+.card:hover {
+  filter: drop-shadow(0 0 5px var(--light-accent));
+}
+
+.card.flipped .card-inner{
   transform: rotateY(180deg);
 }
+
 .card-front, .card-back {
   width: 100%;
   height: 100%;
@@ -111,8 +162,82 @@
 }
 
 .card-back {
-  background-image: url(/assets/images/card-pattern.png);
+  background-image: url(/assets/images/card-back.jpg);
   background-position: center;
   background-size: contain;
 }
 
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  visibility: hidden;
+}
+.backdrop.active {
+  visibility: visible;
+}
+
+.modal-window {
+  background-color: white;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 20px 20px;
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20vh;
+  visibility: hidden;
+}
+
+.empty-leaderboard {
+  text-align: center;
+}
+
+.modal-window.active {
+  visibility: visible;
+}
+
+.modal-title {
+  align-self: center;
+  background-color: var(--accent);
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: pink;
+  color: white;
+  background: linear-gradient(0deg, var(--dark-accent) 0%, var(--accent));
+}
+
+.modal-content {
+  height: 100%;
+  width: 100%;
+}
+
+.table-wrapper {
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  width: min-content;
+  overflow: hidden;
+}
+
+.leaderboard {
+  width: min-content;
+  border-collapse: collapse;
+
+  th, td {
+    text-align: left;
+    padding: 5px 20px;
+  }
+  tr:not(tr:last-child) {
+    border-bottom: 1px solid var(--accent);
+  }
+  td:not(td:last-child),
+  th:not(th:last-child) {
+    border-right: 1px solid var(--accent);
+  }
+}
