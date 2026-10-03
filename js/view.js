@@ -32,7 +32,7 @@ export function createLayout() {
   pageMain.classList = 'main-container main';
   
   const fieldContainer = document.createElement('div');
-  fieldContainer.classList = 'flex-col gap-30';
+  fieldContainer.classList = 'flex-col gap-20';
   
   const counterContainer = document.createElement('div');
   counterContainer.classList = 'flex-row gap-30 counter-container';

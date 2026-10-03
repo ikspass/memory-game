@@ -60,6 +60,7 @@ a {
 .main {
   padding: 20px 0;
   color: var(--dark-accent);
+  min-height: calc(100vh - 60px - 40px);
 }
 
 .main-container {
@@ -80,6 +81,7 @@ a {
 .footer {
   color: white;
   width: 100%;
+  height: 40px;
 }
 
 .main-button {
@@ -135,7 +137,7 @@ a {
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(4, 140px);
+  grid-template-columns: repeat(4, 120px);
   column-gap: 10px;
   row-gap: 10px;
   margin: 0 auto;
@@ -164,8 +166,8 @@ a {
 }
 
 .card{
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   perspective: 1000px;
   opacity: 0;
   animation: showCards 0.5s ease-in-out forwards;
@@ -216,7 +218,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
+  font-size: 54px;
   background-color: white;
   transform: rotateY(180deg);
 }
@@ -326,5 +328,53 @@ a {
   td:not(td:last-child),
   th:not(th:last-child) {
     border-right: 1px solid var(--accent);
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .main-container {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 700px) {
+  .main-container, .modal-window {
+    width: 90vw;
+  }
+
+  .header-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .cards-container {
+    width: 90vw;
+    height: 90vw;
+    justify-content: center;
+    grid-template-columns: repeat(4, minmax(0, 120px));
+    grid-template-rows: repeat(4, minmax(0, 120px));
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+  .card{
+    width: 100%;
+    height: 100%;
+  }
+  .main {
+    min-height: calc(100vh - 104px - 40px);
+  }
+  .main-button{
+    padding: 0 5px;
+  }
+  .header-button{
+    padding: 0 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card-inner {
+    border: 7px solid var(--accent);
+    border-radius: 15px;
+  }
+  .card-front, .card-back{
+    border-radius: 8px
   }
 }
