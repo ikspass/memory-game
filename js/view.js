@@ -5,6 +5,7 @@ export function createLayout() {
   
   const logo = document.createElement('div');
   logo.textContent = 'Memory Game';
+  logo.classList = 'text-title white-text';
   
   const headerMainContainer = document.createElement('div');
   headerMainContainer.classList = 'flex-row header-container main-container';
@@ -14,11 +15,11 @@ export function createLayout() {
   buttonsContainer.classList = 'flex-row gap-10';
   
   const newGameButton = document.createElement('button');
-  newGameButton.classList = 'main-button';
+  newGameButton.classList = 'header-button';
   newGameButton.textContent = 'Новая игра';
   
   const leaderboardButton = document.createElement('button');
-  leaderboardButton.classList = 'main-button';
+  leaderboardButton.classList = 'header-button';
   leaderboardButton.textContent = 'Таблица лидеров';
   
   buttonsContainer.append(newGameButton, leaderboardButton);
@@ -34,7 +35,7 @@ export function createLayout() {
   fieldContainer.classList = 'flex-col gap-30';
   
   const counterContainer = document.createElement('div');
-  counterContainer.classList = 'flex-row gap-30';
+  counterContainer.classList = 'flex-row gap-30 counter-container';
   
   const movesCounterParagraph = document.createElement('p');
   movesCounterParagraph.textContent = 'Ходы: ';
@@ -79,7 +80,10 @@ export function createLayout() {
     pairsSpan,
     leaderboardButton,
     fieldContainer,
-    cardsContainer
+    cardsContainer,
+    pageHeader,
+    pageMain,
+    pageFooter
   }
 }
 
@@ -145,22 +149,19 @@ export function createModalWindow() {
 
 export function createModalVictoryContent() {
   const modalContent = document.createElement('div');
-  modalContent.classList = 'flex-col gap-20';
+  modalContent.classList = 'flex-col gap-20 modal-victory-content';
 
   const newGameButton = document.createElement('button');
   newGameButton.classList = 'main-button';
   newGameButton.textContent = 'Новая игра';
-
-  const modalP = document.createElement('p');
-  modalP.textContent = 'Игра завершена со следующим результатом:'
   
   const movesP = document.createElement('p');
-  movesP.textContent = 'Всего ходов: ';
+  movesP.textContent = 'Всего совершено ходов: ';
   const movesSpan = document.createElement('span');
 
   movesP.append(movesSpan);
 
-  modalContent.append(modalP, movesP, newGameButton)
+  modalContent.append(movesP, newGameButton)
 
   return {
     modalContent,
@@ -183,14 +184,12 @@ export function createLeaderBoard(data = []) {
     
     const headRow = document.createElement('tr');
     const placeHead = document.createElement('th');
-    placeHead.textContent = '#';
+    placeHead.textContent = 'Место';
     const movesHead = document.createElement('th');
-    movesHead.textContent = 'Ходы';
+    movesHead.textContent = 'Кол-во ходов';
     const dateHead = document.createElement('th');
     dateHead.textContent = 'Дата';
 
-
-    
     headRow.append(placeHead, movesHead, dateHead);
     leaderboard.append(headRow);
     leaderboardTable.append(leaderboard);
@@ -201,7 +200,6 @@ export function createLeaderBoard(data = []) {
         const placeColumn = document.createElement('td');
         placeColumn.textContent = i + 1;
         const movesColumn = document.createElement('td');
-        console.log(data[i].moves)
         movesColumn.textContent = data[i].moves;
         const dateColumn = document.createElement('td');
         dateColumn.textContent = data[i].date;

@@ -7,11 +7,22 @@ const victoryModal = createModalVictoryContent();
 function backdropOn() {
   modal.backdrop.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  const hasScroll = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+  if (hasScroll) {
+    console.log('Полоса прокрутки есть')
+    ui.pageHeader.style.paddingRight = '15px';
+    ui.pageMain.style.paddingRight = '15px';
+    ui.pageFooter.style.paddingRight = '15px';
+  }
 }
 
 function backdropOff() {
   modal.backdrop.classList.remove('active');
   document.body.style.overflow = 'visible';
+  ui.pageHeader.style.paddingRight = '';
+  ui.pageMain.style.paddingRight = '';
+  ui.pageFooter.style.paddingRight = '';
 }
 
 function openModalWindow(title, elem) {
@@ -19,12 +30,14 @@ function openModalWindow(title, elem) {
   modal.modalWindow.classList.add('active');
   modal.modalTitle.textContent = title;
   modal.modalContent.append(elem);
+  modal.backdrop.append(modal.modalWindow);
 }
 
 function closeModalWindow() {
   backdropOff();
   modal.modalWindow.classList.remove('active');
   modal.modalContent.replaceChildren();
+  modal.backdrop.replaceChildren();
 }
 
 
@@ -67,10 +80,17 @@ document.addEventListener('keydown', (event) => {
   }
 })
 
+modal.backdrop.addEventListener('click', (event) => {
+  if (event.target === event.currentTarget) {
+    if (modal.modalWindow.classList.contains('active')) {
+      closeModalWindow();
+    }
+  }
+})
+
 ui.cardsContainer.addEventListener('click', (event) => {
   if (isFieldBlocked) return;
   if (event.target.closest('.card')){
-
     const card = event.target.closest('[data-image]');
 
     if(card.dataset.isFound === true) return;
@@ -81,11 +101,17 @@ ui.cardsContainer.addEventListener('click', (event) => {
 
     if (selectedCards.length == 2) {
       if (selectedCards[0].dataset.image == selectedCards[1].dataset.image) {
+        selectedCards[0].firstElementChild.classList.add('match-animation')
+        selectedCards[1].firstElementChild.classList.add('match-animation')
+        
         pairs++;
         moves++;
         renderCounters();
 
-        selectedCards.forEach(card => card.dataset.isFound = true)
+        selectedCards.forEach(card => {
+          card.dataset.isFound = true;
+          card.classList.remove('selected')
+        })
         selectedCards = [];
 
         if (isGameEnd()) {
@@ -135,7 +161,7 @@ function startNewGame() {
 
 function gameEnding() {
   victoryModal.movesSpan.textContent = moves;
-  openModalWindow('Победа', victoryModal.modalContent);
+  openModalWindow('Победа!', victoryModal.modalContent);
   storeResult(moves);
 }
 
@@ -150,19 +176,27 @@ function storeResult(moves) {
     moves: moves,
     date: formattedDate
   }
+
   const data = JSON.parse(localStorage.getItem('result'));
-  data.push(result);
-  localStorage.setItem('result', JSON.stringify(data));
+  if (data.length !== 0) {
+    const isAlreadyExist = data.find(item => item.moves === result.moves && item.date === result.date);
+    if (!isAlreadyExist) {
+      data.push(result);
+      localStorage.setItem('result', JSON.stringify(data));
+    }
+  } else {
+    data.push(result);
+    localStorage.setItem('result', JSON.stringify(data));
+  }
 }
+
 if (localStorage.getItem('result') === null) {
   localStorage.setItem('result', JSON.stringify([]));
 } 
 
 function fillLeaderboard() {
-  console.log(JSON.parse(localStorage.getItem('result')))
-
   const data = JSON.parse(localStorage.getItem('result'))
-  if (data.length !== 0) {
+  if (data.length > 0) {
     data.sort((a, b) => {
       if (a.moves !== b.moves) {
         return a.moves - b.moves;
