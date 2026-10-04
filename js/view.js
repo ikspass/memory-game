@@ -105,7 +105,7 @@ export function createCard(image) {
 
   const cardImg = document.createElement('img');
   cardImg.classList.add('card-image')
-  cardImg.src = `../assets/images/${image}`;
+  cardImg.src = `assets/images/${image}`;
 
   cardFront.append(cardImg);
   cardInner.append(cardFront, cardBack);
