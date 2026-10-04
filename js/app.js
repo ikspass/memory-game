@@ -6,8 +6,7 @@ const victoryModal = createModalVictoryContent();
 
 function backdropOn() {
   modal.backdrop.classList.add('active');
-  document.body.style.overflow = 'hidden';
-
+  
   const hasScroll = document.documentElement.scrollHeight > document.documentElement.clientHeight;
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   if (hasScroll) {
@@ -15,6 +14,8 @@ function backdropOn() {
     ui.pageMain.style.paddingRight = `${scrollbarWidth}px`;
     ui.pageFooter.style.paddingRight = `${scrollbarWidth}px`;
   }
+
+  document.body.style.overflow = 'hidden';
 }
 
 function backdropOff() {
