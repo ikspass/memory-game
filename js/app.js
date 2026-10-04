@@ -9,11 +9,11 @@ function backdropOn() {
   document.body.style.overflow = 'hidden';
 
   const hasScroll = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   if (hasScroll) {
-    console.log('Полоса прокрутки есть')
-    ui.pageHeader.style.paddingRight = '15px';
-    ui.pageMain.style.paddingRight = '15px';
-    ui.pageFooter.style.paddingRight = '15px';
+    ui.pageHeader.style.paddingRight = `${scrollbarWidth}px`;
+    ui.pageMain.style.paddingRight = `${scrollbarWidth}px`;
+    ui.pageFooter.style.paddingRight = `${scrollbarWidth}px`;
   }
 }
 
@@ -40,8 +40,6 @@ function closeModalWindow() {
   modal.backdrop.replaceChildren();
 }
 
-
-
 ui.newGameButton.addEventListener('click', startNewGame);
 victoryModal.newGameButton.addEventListener('click', startNewGame);
 
@@ -49,6 +47,19 @@ ui.leaderboardButton.addEventListener('click', () => {
   openModalWindow('Таблица лидеров', fillLeaderboard());
 })
 modal.modalCloseButton.addEventListener('click', closeModalWindow)
+
+const cardsImages = [
+  'alien.svg',
+  'banana.svg',
+  'bomb.svg',
+  'cherry-blossom.svg',
+  'sloth.svg',
+  'shortcake.svg',
+  'strawberry.svg',
+  'teddy-bear.svg',
+]
+
+const gameCards = [...cardsImages, ...cardsImages];
 
 function resetCardsField () {
   ui.cardsContainer.replaceChildren();
@@ -99,10 +110,10 @@ ui.cardsContainer.addEventListener('click', (event) => {
     card.classList.add('flipped');
     selectedCards.push(card);
 
-    if (selectedCards.length == 2) {
+    if (selectedCards.length === 2) {
       if (selectedCards[0].dataset.image == selectedCards[1].dataset.image) {
-        selectedCards[0].firstElementChild.classList.add('match-animation')
-        selectedCards[1].firstElementChild.classList.add('match-animation')
+        selectedCards[0].firstChild.classList.add('match-animation')
+        selectedCards[1].firstChild.classList.add('match-animation')
         
         pairs++;
         moves++;
@@ -137,10 +148,8 @@ function isGameEnd() {
   return pairs === 8 ? true : false;
 }
 
-const cards = ['🌺','🌺','🍓','🍓','🧸','🧸','💣','💣','👽','👽','🍰','🍰','🎀','🎀','🦥','🦥',];
-
 function shuffleCards() {
-  let shuffledCards = cards;
+  let shuffledCards = gameCards;
   for (let i = shuffledCards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];

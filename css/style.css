@@ -11,6 +11,10 @@ body {
   --accent: #C2B1D9;
   --dark-accent: #927DAD;
   --gray: #D9D9D9;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 a {
@@ -60,7 +64,9 @@ a {
 .main {
   padding: 20px 0;
   color: var(--dark-accent);
-  min-height: calc(100vh - 60px - 40px);
+  height: 100%;
+  flex: 1;
+  /* min-height: calc(100vh - 60px - 40px); */
 }
 
 .main-container {
@@ -96,6 +102,7 @@ a {
   font-size: 16px;
   transition: background-color 0.3s;
 }
+
 .header-button {
   background-color: var(--light-accent);
   color: var(--dark-accent);
@@ -108,7 +115,6 @@ a {
   font-size: 16px;
   transition: background-color 0.3s;
 }
-
 
 .border-button {
   border: 1px solid var(--accent);
@@ -141,6 +147,10 @@ a {
   column-gap: 10px;
   row-gap: 10px;
   margin: 0 auto;
+}
+
+.card-image {
+  width: 70%;
 }
 
 @keyframes showCards {
@@ -180,14 +190,14 @@ a {
 }
 
 .match-animation {
-  animation: pulse 0.5s ease-in-out;
+  animation: pulse 0.5s 0.5s ease-in-out;
 }
 
 .card-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s, border-color 0.5s;
+  transition: transform 0.6s, border-color 0.5s 0.5s;
   transform-style: preserve-3d;
   border: 10px solid var(--accent);
   background-color: var(--accent);
@@ -341,6 +351,22 @@ a {
     width: 90vw;
   }
 
+  
+.border-button:hover {
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background-color: white;
+}
+.main-button:hover {
+  background-color: var(--accent);
+  color: white;
+}
+
+.header-button:hover {
+  background-color: var(--light-accent);
+  color: var(--dark-accent);
+}
+
   .header-container {
     flex-direction: column;
     gap: 20px;
@@ -358,9 +384,6 @@ a {
     width: 100%;
     height: 100%;
   }
-  .main {
-    min-height: calc(100vh - 104px - 40px);
-  }
   .main-button{
     padding: 0 5px;
   }
@@ -368,7 +391,11 @@ a {
     padding: 0 15px;
   }
 }
-
+@media screen and (max-width: 500px) {
+  .card-front{
+    font-size: 30px;
+  }
+}
 @media screen and (max-width: 450px) {
   .card-inner {
     border: 7px solid var(--accent);

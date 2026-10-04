@@ -87,24 +87,25 @@ export function createLayout() {
   }
 }
 
-export function createCard(item) {
+export function createCard(image) {
   const card = document.createElement('div');
-  card.classList = 'card';
-  card.id = 'card';
-  card.dataset.image = item;
+  card.classList.add('card');
+  card.dataset.image = image;
   card.dataset.isFound = false;
 
   const cardInner = document.createElement('div');
-  cardInner.classList = 'card-inner';
+  cardInner.classList.add('card-inner');
 
   const cardFront = document.createElement('div');
-  cardFront.classList = 'card-front';
+  cardFront.classList.add('card-front');
+
 
   const cardBack = document.createElement('div');
   cardBack.classList = 'card-back';
 
-  const cardImg = document.createElement('div');
-  cardImg.textContent = card.dataset.image;
+  const cardImg = document.createElement('img');
+  cardImg.classList.add('card-image')
+  cardImg.src = `../assets/images/${image}`;
 
   cardFront.append(cardImg);
   cardInner.append(cardFront, cardBack);
